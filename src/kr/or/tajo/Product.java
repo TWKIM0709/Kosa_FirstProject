@@ -8,7 +8,7 @@ public class Product implements Serializable{
 	private String kind; //기기 종류
 	private int price; // 분당 가격
 	private boolean able; // 대여 가능 유무 ( true : 대여가능 / false : 대여불가 )
-	private Date startRent; // 대여 시작 시간
+	private Date startTime; // 대여 시작 시간
 	
 	//생성자
 	public Product(String no, String kind, int price) {
@@ -17,14 +17,55 @@ public class Product implements Serializable{
 		this.kind = kind;
 		this.price = price;
 		this.able = true;
-		this.startRent = null;
+		this.startTime = null;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "Product [no=" + no + ", kind=" + kind + ", price=" + price + ", able=" + able + ", startRent="
-				+ startRent + "]";
+		return "Product [no=" + no + ", kind=" + kind + ", price=" + price + ", able=" + able + ", startTime="
+				+ startTime + "]";
 	}
 	
 	// getter setter
+	public String getNo() {
+		return no;
+	}
+
+	public void setNo(String no) {
+		this.no = no;
+	}
+
+	public String getKind() {
+		return kind;
+	}
+
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public boolean isAble() {
+		return able;
+	}
+
+	public void setAble(boolean able) {
+		this.able = able;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+	
+	
 }

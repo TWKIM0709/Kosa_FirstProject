@@ -13,12 +13,23 @@ public class Log implements Serializable {
 	private long amount; // 결제가격
 
 	public Log(User user, Product product, long amount) {
-		this.userId = "user.getId로 수정"; //user객체의 userId 받아오기
-		//Product 객체의 제품 번호, 종류, 시작시간 받아오기
-		this.amount = amount;
+		//user, product 사용해서 변수들 초기화
+		this.userId = user.getId();
+		this.productNo = product.getNo();
+		this.productKind = product.getKind();
+		this.startTime = product.getStartTime();
 		returnTime = Utils.cal.getTime();
+		this.amount = amount;
+	}
+	
+	public void paymentPrint() {
+		// [1234번] [자전거] [12:01-12:30] [12000원]
+		System.out.printf("[%s원] [%s] [%s] ~ [%s] [%s원]\n",productNo,productKind,Utils.dateformat.format(startTime),Utils.dateformat.format(returnTime),amount);
+	}
+
+	@Override
+	public String toString() {
+		return "[유저]=" + userId + ", [기기번호]=" + productNo + ", [기기종류]=" + productKind + ", [대여시작시간]="
+				+ startTime + ", [대여종료시간]=" + returnTime + ", [결제금액]=" + amount;
 	}
 }
-
-
-// [아이디] [기기번호] [종류] [시작시간] [종료시간] [가격]

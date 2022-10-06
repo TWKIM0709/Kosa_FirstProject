@@ -10,8 +10,12 @@ public class ProductOil extends Product implements ChargeAble{
 
 	@Override
 	public void charged() {
-		this.charged = !charged;
+		this.charged = true;
 		System.out.println("기름 충전 완료");
+	}
+
+	public void setCharged(boolean charged) {
+		this.charged = charged;
 	}
 
 	public boolean isCharged() {

@@ -1,5 +1,6 @@
 package kr.or.tajo;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -12,6 +13,9 @@ public class Utils {
 	public static final String SYSTEMINFORPATH = BASICPATH + "systeminfo.txt";
 	public static Calendar cal = Calendar.getInstance();
 	public static Scanner scanner = new Scanner(System.in);
+	public static SimpleDateFormat dateformat = new SimpleDateFormat("yy.MM.dd-HH:mm");
+	public static final String REGIXID = "^[a-z]+[a-z0-9]{5,19}$";//아이디 제한:윤태호
+	public static final String REGIXPASSWARD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,16}$";//비밀번호 제한:윤태호
 	
-	//밑에는 정규식, 날짜 포멧 등
+	
 }
