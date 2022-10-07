@@ -10,6 +10,7 @@ public class User implements Serializable {
 	private String name; // 이름
 	private boolean grade; // 등급(관리자인지 아닌지)
 	private Map<String, Product> rentList; // 대여목록
+	private int ticket;
 
 	// 생성자함수
 	public User(String id, String password, String name, boolean grade) {
@@ -18,6 +19,7 @@ public class User implements Serializable {
 		this.password = password;
 		this.name = name;
 		this.grade = grade;
+		this.ticket = 0;
 		this.rentList = new HashMap<String, Product>();
 	}
 
@@ -44,15 +46,24 @@ public class User implements Serializable {
 		
 		//대여 목록에서 삭제
 		rentList.remove(productNo);
-		System.out.println("%s번 기기를 대여목록에서 삭제했습니다.");
+		System.out.printf("%s번 기기를 대여목록에서 삭제했습니다.\n",productNo);
 	}// delRent end
 	
+	//티켓구매함수 : 김태우
+	public void addTicket(int ticket) {
+		this.ticket += ticket;
+	}// addTicket end
 	
+	public void useTicket() {
+		this.ticket--;
+	}
+	
+
 	// getter setter toString()
 	@Override
 	public String toString() {
-		return "User [아이디=" + id + ", 비밀번호=" + password + ", 이름=" + name + ", 등급=" + ((grade) ? "관리자" : "일반회원") + ", 대여기기수량="
-				+ rentList.size() + "]";
+		return "아이디[" + id + "]\t이름[" + name + "]\t등급[" + ((grade) ? "관리자" : "일반회원") + "]\t대여기기수량["
+				+ rentList.size() + "]\t티켓개수[" + ticket + "]";
 	}
 
 	public String getId() {
@@ -95,4 +106,7 @@ public class User implements Serializable {
 		this.rentList = rentList;
 	}
 
+	public int getTicket() {
+		return ticket;
+	}
 }

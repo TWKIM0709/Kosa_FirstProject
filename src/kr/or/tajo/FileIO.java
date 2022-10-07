@@ -38,7 +38,7 @@ public class FileIO {
 		filename = "";//나중에 처리
 	}//FileIO end
 	
-	//고객목록(HashMap) 저장, 불러오기
+	//고객목록(HashMap) 저장, 불러오기: 윤태호
 	public void userListSave(Map<String, User> userlist) {
 		filename = Utils.USERPATH;//경로 설정하기
 		
@@ -90,7 +90,7 @@ public class FileIO {
 		return userList;
 	}//userListLoad end
 	
-	//로그목록(HashMap) 저장, 불러오기
+	//로그목록(HashMap) 저장, 불러오기: 윤태호
 	public void logListSave(List<Log> loglist) {
 		filename = Utils.LOGPATH;//경로 설정하기
 		
@@ -142,7 +142,7 @@ public class FileIO {
 		return logList;
 	}//logListLoad end
 	
-	//기기목록(ArrayList) 저장, 불러오기
+	//기기목록(ArrayList) 저장, 불러오기: 윤태호
 	public void productListSave(Map<String, Product> productlist) {
 		filename = Utils.PRODUCTPATH;//경로 설정하기
 		
@@ -194,7 +194,7 @@ public class FileIO {
 		return productList;
 	}//productListSave end
 	
-	//시스템정보 저장,불러오기 (총 매출, 총 대여횟수)
+	//시스템정보 저장,불러오기 (총 매출, 총 대여횟수): 윤태호
 	public void systemInfoListSave(TajoSystemInfo systemInfolist) {
 		filename = Utils.SYSTEMINFORPATH;//경로 설정하기
 		

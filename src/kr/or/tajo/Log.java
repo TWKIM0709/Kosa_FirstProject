@@ -1,6 +1,7 @@
 package kr.or.tajo;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Log implements Serializable {
@@ -18,18 +19,21 @@ public class Log implements Serializable {
 		this.productNo = product.getNo();
 		this.productKind = product.getKind();
 		this.startTime = product.getStartTime();
+		Utils.cal = Calendar.getInstance();
 		returnTime = Utils.cal.getTime();
 		this.amount = amount;
 	}
 	
 	public void paymentPrint() {
 		// [1234번] [자전거] [12:01-12:30] [12000원]
-		System.out.printf("[%s원] [%s] [%s] ~ [%s] [%s원]\n",productNo,productKind,Utils.dateformat.format(startTime),Utils.dateformat.format(returnTime),amount);
+		System.out.printf("[%s번] [%s] [%s] ~ [%s] [%s원]\n",productNo,productKind,Utils.dateformat.format(startTime),Utils.dateformat.format(returnTime),amount);
 	}
 
 	@Override
 	public String toString() {
-		return "[유저]=" + userId + ", [기기번호]=" + productNo + ", [기기종류]=" + productKind + ", [대여시작시간]="
-				+ startTime + ", [대여종료시간]=" + returnTime + ", [결제금액]=" + amount;
+		long diffMin = (startTime.getTime() - returnTime.getTime()) / 60000;
+		//유저[test123] 기기번호[2] 기기종류[자전거] 
+		return "유저[" + userId + "] 기기번호[" + productNo + "] 기기종류[" + productKind + "] 대여시간["
+		+ Utils.dateformat.format(startTime) + " ~ " + Utils.dateformat.format(returnTime) + " " + diffMin +"분] 결제금액[" + amount + "원]";
 	}
 }

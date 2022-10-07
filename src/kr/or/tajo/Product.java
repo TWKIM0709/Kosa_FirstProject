@@ -22,10 +22,9 @@ public class Product implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "Product [no=" + no + ", kind=" + kind + ", price=" + price + ", able=" + able + ", startTime="
-				+ startTime + "]";
+		return "기기번호[" + no + "]\t종류[" + kind + "]\t 가격[" + price + "]\t대여가능여부[대여" + ((able)?"":"불") + "가능]" +
+				((startTime != null) ? ("\t대여시작시간=[" + startTime + "]") : "");
 	}
-	
 	// getter setter
 	public String getNo() {
 		return no;

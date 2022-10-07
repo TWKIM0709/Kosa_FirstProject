@@ -12,4 +12,20 @@ public class TajoSystemInfo implements Serializable{
 		this.totalSales = totalSales;
 		this.totalRent = totalRent;
 	}
+
+	public long getTotalSales() {
+		return totalSales;
+	}
+
+	public void setTotalSales(long totalSales) {
+		this.totalSales = totalSales;
+	}
+
+	public int getTotalRent() {
+		return totalRent;
+	}
+
+	public void setTotalRent(int totalRent) {
+		this.totalRent = totalRent;
+	}
 }

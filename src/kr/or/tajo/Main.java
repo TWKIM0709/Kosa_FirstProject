@@ -6,4 +6,5 @@ public class Main {
 		TajoSystem system = new TajoSystem();
 		system.run();
 	}
+
 }
