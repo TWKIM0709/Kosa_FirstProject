@@ -55,23 +55,25 @@ public class TajoSystem {
 			logList = file.logListLoad();
 			systemInfo = file.systemInfoListLoad();
 		}
-		
+//		userList.put("admin123", new User("admin123", "1q2w3e$R", "admin3", true));
+//		userList.remove("admin123");
+//		userList.put("admin", new User("admin", "1234", "admin3", true));
 		//시작메뉴:윤태호
 		mainrupe:while(true) {
 			int key = 0; //입력용 변수
 			boolean auto = true; // while문 변수
-			this.process = new ProductProcess(productList); // 유저, 기기 리스트 갱신
-			management = new UserManagement(userList);
+			this.process = new ProductProcess(); // 유저, 기기 리스트 갱신
+			management = new UserManagement();
 			
 			//프로그램 시작
 			while (auto) {
 				key = TajoPrint.startMenu(); //로그인 메뉴 출력, 입력
 				switch (key) {
 				case 1://1. 로그인
-					userId = management.userSingIn();
+					userId = management.userSingIn(userList);
 					break;
 				case 2://2. 회원가입
-					if(management.userSignUp()) {
+					if(management.userSignUp(userList)) {
 						file.userListSave(userList);
 					}
 					break;
@@ -118,13 +120,19 @@ public class TajoSystem {
 						}
 						break;
 					case 2://2. 기기관리
-						process.setProcess(productList);
-						productList = process.productProcess();
+						process.productProcess(productList);
 						file.productListSave(productList);
 						System.out.println("저장완료");
 						break;
-					case 3: //로그아웃
+					case 3: //유저관리
+						management.userUpdateAdmin(userList);
+						file.userListSave(userList);
+						break;
+					case 4: //로그아웃
+						userId="";
 						break loop;
+					case 5:
+						System.exit(0);
 					default:
 						System.out.println("올바른 입력이 아닙니다.");
 						break;
@@ -160,29 +168,34 @@ public class TajoSystem {
 						TajoPrint.productListPrint(userList.get(userId));
 						System.out.println("반납하길 원하는 번호를 입력하세요");
 						String inputNum = Utils.scanner.nextLine();
+						Log log = process.returnProduct(userList.get(userId), productList.get(inputNum));
 						
+						if(log!=null) {
+							logList.add(log);
+						}
 						
-						logList.add(process.returnProduct(userList.get(userId), productList.get(inputNum)));
 						systemInfo.setTotalSales(systemInfo.getTotalSales() + productList.get(inputNum).getPrice());//총 매출 추가
 						//파일 저장
 						saveAll();
 						break;
 					case 3://3. 회원정보수정
-						userList = management.userUpdate(userList, userId);
+						management.userUpdate(userList, userId);
 						file.userListSave(userList);
 						break;
 					case 4://4. 회원탈퇴
-						userList = management.userDelete(userList, userId);
+						management.userDelete(userList, userId);
 						file.userListSave(userList);
 						break lope;
 					case 5:
 						if(!management.buyTicket(userList, userId)) {
 							System.out.println("티켓이 구매되지 않았습니다.");
+						} else {
+							System.out.println("티켓이 구매되었습니다.");
 						}
-						System.out.println("티켓이 구매되었습니다.");
 						file.userListSave(userList);
 						break;
 					case 6://5. 로그아웃
+						this.userId = "";
 						break lope;
 					case 7://6. 종료
 						System.exit(0);

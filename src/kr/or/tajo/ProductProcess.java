@@ -7,19 +7,9 @@ import java.util.Map;
 
 //김태우
 public class ProductProcess {
-	public Map<String, Product> products; // 기기목록
-	// 생성자
-
-	public ProductProcess(Map<String, Product> products) {
-		this.products = products;
-	}
-
-	public void setProcess(Map<String, Product> products) {
-		this.products = products;
-	}
 
 	// 기기 번호 계산 함수 : 김태우
-	public String getProductNumber() {
+	public String getProductNumber(Map<String,Product> products) {
 		String returnValue = null;
 
 		// 목록이 비어있으면 (기기가 없으면) 기기번호를 0으로 지정
@@ -38,27 +28,29 @@ public class ProductProcess {
 	}// getProductNumber end
 
 	// 기기 등록 기능 : 김태우
-	public void addProduct(String kind, int price, String type) {
-		String productNumber = getProductNumber();
+	public void addProduct(Map<String,Product> products,String kind, int price, String type) {
+		String productNumber = getProductNumber(products);
+		String types = "";
 		Product p = null;
 		switch (type) {
 		case "0":
-			p = ProductFactory.getProduct("normal", productNumber, kind, price);
+			types = "normal";
 			break;
 		case "1":
-			p = ProductFactory.getProduct("electric", productNumber, kind, price);
+			types = "electric";
 			break;
 		case "2":
-			p = ProductFactory.getProduct("oil", productNumber, kind, price);
+			types = "oil";
 			break;
 		}
 
+		p = ProductFactory.getProduct(types, productNumber, kind, price);
 		products.put(productNumber, p);
 		System.out.printf("%s번 %s가 분당가격 %d원으로 생성되었습니다.\n", productNumber, kind, price);
 	} // addProduct end
 
 	// 기기 삭제 기능 : 김태우
-	public void deleteProduct(String productNo) {
+	public void deleteProduct(Map<String,Product> products,String productNo) {
 		String input = "";
 		// 등록되지 않은 기기라면
 		if (!products.containsKey(productNo)) {
@@ -218,7 +210,7 @@ public class ProductProcess {
 	}// returnProduct end
 
 	// 기기관리 함수 :김태우
-	public Map<String, Product> productProcess() {
+	public void productProcess(Map<String,Product> products) {
 		String productNumber = "";
 		String productName = "";
 		Integer productPirce = 0;
@@ -238,13 +230,13 @@ public class ProductProcess {
 				productName = Utils.scanner.nextLine();
 				System.out.println("기기의 분당 가격을 입력하세요");
 				productPirce = Integer.parseInt(Utils.scanner.nextLine());
-				addProduct(productName, productPirce, typeInput);
+				addProduct(products,productName, productPirce, typeInput);
 				break;
 			case 2: // 기기삭제
 				TajoPrint.productListPrint(products, 0); // 전체 기기목록 출력
 				System.out.println("삭제할 기기번호를 입력하세요.");
 				productNumber = Utils.scanner.nextLine();
-				deleteProduct(productNumber);
+				deleteProduct(products,productNumber);
 				break;
 			case 3: // 기기충전
 				TajoPrint.productListPrint(products, 2); // 충전 기능이 있는 기기목록 출력
@@ -256,7 +248,7 @@ public class ProductProcess {
 					// exit 입력시
 					if (productNumber.equals("exit")) {
 						System.out.println("충전하기 종료...");
-						return products;
+						break;
 					}
 
 					// 충전 가능한 기기가 아니라면
@@ -264,18 +256,15 @@ public class ProductProcess {
 						System.out.println("충전 가능한 기기가 아닙니다.");
 						continue;
 					}
-
+					// 충전 가능한 기기라면
+					if (products.get(productNumber) instanceof ProductElectric) {
+						((ProductElectric) products.get(productNumber)).charged();
+					} else {
+						((ProductOil) products.get(productNumber)).charged();
+					}
+					System.out.println("충전 완료되었습니다.");
 					break;
 				}
-
-				// 충전 가능한 기기라면
-				if (products.get(productNumber) instanceof ProductElectric) {
-					((ProductElectric) products.get(productNumber)).charged();
-				} else {
-					((ProductOil) products.get(productNumber)).charged();
-				}
-
-				System.out.println("충전 완료되었습니다.");
 				break;
 			case 4:
 				System.out.println("기기관리 종료...");
@@ -284,7 +273,6 @@ public class ProductProcess {
 				System.out.println("올바른 값을 입력해주세요");
 			}
 		}
-		return products;
 	}
 
 }

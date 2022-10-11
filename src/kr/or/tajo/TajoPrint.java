@@ -106,7 +106,7 @@ public class TajoPrint {
 		System.out.println("***************************************");
 		System.out.println("\t원하시는 메뉴를 선택하세요");
 		System.out.println("***************************************");
-		System.out.println("1. 시스템 조회 | 2. 기기관리 | 3. 로그아웃");
+		System.out.println("1. 시스템 조회 | 2. 기기관리 | 3.유저등급관리 | 4. 로그아웃");
 
 		String adminMenu = Utils.scanner.nextLine();
 		if(adminMenu.matches(Utils.ONLYNUMBER)) {
@@ -118,6 +118,9 @@ public class TajoPrint {
 				System.out.println("기기관리를 시작합니다.");// 2. 기기관리
 				break;
 			case "3":
+				System.out.println("유저등급관리를 시작합니다.");
+				break;
+			case "4":
 				System.out.println("로그아웃되었습니다.");
 				break;
 			default:
@@ -195,20 +198,15 @@ public class TajoPrint {
 	
 	// 기기 목록 : 박지영
 	public static void productListPrint(Map<String, Product> productList, int index) {
-		// index 0 : 전체 출력
-		// index 1 : 대여가능출력
-		// index 2 : 충전필요기기출력
-		// Collection clist = map.values(); //value 는 중복데이터 있어서 순서가 있는 데이터 집합
-		// System.out.println(clist.toString());
 		System.out.println();
 		Collection productValueList = productList.values();
 		switch (index) {
-		case 0:
+		case 0:// index 0 : 전체 출력
 			for (Object o : productValueList) {
 				System.out.println(((Product) o).toString());
 			}
 			break;
-		case 1:
+		case 1:// index 1 : 대여가능출력
 			for (Object o : productValueList) {
 				// Product의 isAble() true 일때만 출력
 				if (((Product) o).isAble()) {
@@ -216,7 +214,7 @@ public class TajoPrint {
 				}
 			}
 			break;
-		case 2:
+		case 2:// index 2 : 충전필요기기출력
 			for (Object o : productValueList) {
 				if ((Product) o instanceof ChargeAble) {
 					boolean str = (o instanceof ProductOil) ? ((ProductOil)o).isCharged() : ((ProductElectric)o).isCharged();

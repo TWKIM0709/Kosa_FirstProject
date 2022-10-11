@@ -6,3 +6,4 @@ public class ProductNormal extends Product {
 	}
 	
 }
+

@@ -30,24 +30,12 @@ public class Product implements Serializable{
 		return no;
 	}
 
-	public void setNo(String no) {
-		this.no = no;
-	}
-
 	public String getKind() {
 		return kind;
 	}
 
-	public void setKind(String kind) {
-		this.kind = kind;
-	}
-
 	public int getPrice() {
 		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
 	}
 
 	public boolean isAble() {
@@ -65,6 +53,4 @@ public class Product implements Serializable{
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
-	
-	
 }
